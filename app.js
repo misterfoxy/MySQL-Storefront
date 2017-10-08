@@ -237,7 +237,7 @@ connection.connect(function(err) {
             let price = answer.price;
             let quantity = answer.stock_quantity;
 
-            connection.query("INSERT INTO products(product_name, department_name, price, stock_quantity) VALUES('"+name+"', '"+category+"', '"+price+"', '"+quantity+"')", function(err, res, field){
+            connection.query("INSERT INTO products SET?", answer, function(err, res, field){
               if(err){
                 throw err;
               }
