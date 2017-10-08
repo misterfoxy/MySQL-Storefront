@@ -211,6 +211,40 @@ connection.connect(function(err) {
         });
       } else if (answer.command === 'Add New Product') {
 
+          inquirer.prompt([{
+
+            name: 'product_name',
+            type: 'input',
+            message: 'Please enter the product name',
+
+          }, {
+
+            name: 'department_name',
+            type: 'input',
+            message: 'Please enter the department category',
+
+          }, {
+            name: 'price',
+            type: 'input',
+            message: 'Please enter the per unit price'
+          }, {
+            name: 'stock_quantity',
+            type: 'input',
+            message: 'Please enter the amount of inventory you want to start with'
+          }]).then(function(answer){
+            let name = answer.product_name;
+            let category = answer.department_name;
+            let price = answer.price;
+            let quantity = answer.stock_quantity;
+
+            connection.query("INSERT INTO products(product_name, department_name, price, stock_quantity) VALUES('"+name+"', '"+category+"', '"+price+"', '"+quantity+"')", function(err, res, field){
+              if(err){
+                throw err;
+              }
+              console.log("New item has been inserted to DB under ID " + res.insertID);
+              connection.end();
+            });
+          });
       }
     });
 
